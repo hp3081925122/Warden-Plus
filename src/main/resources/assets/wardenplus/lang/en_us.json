@@ -1,0 +1,10 @@
+{
+  "bossbar.wardenplus.stage1": "%s",
+  "bossbar.wardenplus.stage2": "%s · Resonance",
+  "bossbar.wardenplus.stage3": "%s · Silence",
+  "death.attack.wardenplus.echo": "%1$s was torn apart by the echo of %2$s",
+  "death.attack.wardenplus.echo.player": "%1$s was torn apart by the echo of %2$s while fleeing %3$s",
+  "bossbar.wardenplus.ender.stage1": "%s · Ender",
+  "bossbar.wardenplus.ender.stage2": "%s · Rift",
+  "bossbar.wardenplus.ender.stage3": "%s · Thousand Echoes"
+}

@@ -1,0 +1,10 @@
+{
+  "bossbar.wardenplus.stage1": "%s",
+  "bossbar.wardenplus.stage2": "%s · 共鸣",
+  "bossbar.wardenplus.stage3": "%s · 寂灭",
+  "death.attack.wardenplus.echo": "%1$s 被%2$s的回响撕碎了",
+  "death.attack.wardenplus.echo.player": "%1$s 在逃离%3$s时被%2$s的回响撕碎了",
+  "bossbar.wardenplus.ender.stage1": "%s · 末影",
+  "bossbar.wardenplus.ender.stage2": "%s · 裂隙",
+  "bossbar.wardenplus.ender.stage3": "%s · 千音"
+}
