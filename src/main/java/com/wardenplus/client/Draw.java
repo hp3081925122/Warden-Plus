@@ -1,10 +1,9 @@
 package com.wardenplus.client;
 
-import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.LinkedHashMap;
-import java.util.SequencedMap;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,8 +15,8 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public final class Draw {
-    private static final SequencedMap<RenderType, ByteBufferBuilder> FIXED = new LinkedHashMap<>();
-    private static final MultiBufferSource.BufferSource BUFFERS = MultiBufferSource.immediateWithBuffers(FIXED, new ByteBufferBuilder(256));
+    private static final LinkedHashMap<RenderType, BufferBuilder> FIXED = new LinkedHashMap<>();
+    private static final MultiBufferSource.BufferSource BUFFERS = MultiBufferSource.immediateWithBuffers(FIXED, new BufferBuilder(256));
     private static Matrix4f matrix;
     private static double cx;
     private static double cy;
@@ -62,14 +61,14 @@ public final class Draw {
 
     public static VertexConsumer buffer(RenderType type) {
         if (FIXED.isEmpty()) {
-            FIXED.put(WpRenderTypes.SOLID, new ByteBufferBuilder(WpRenderTypes.SOLID.bufferSize()));
+            FIXED.put(WpRenderTypes.SOLID, new BufferBuilder(WpRenderTypes.SOLID.bufferSize()));
         }
-        FIXED.computeIfAbsent(type, t -> new ByteBufferBuilder(t.bufferSize()));
+        FIXED.computeIfAbsent(type, t -> new BufferBuilder(t.bufferSize()));
         return BUFFERS.getBuffer(type);
     }
 
     public static void v(VertexConsumer vc, double x, double y, double z, float u, float v, float r, float g, float b, float a) {
-        vc.addVertex(matrix, (float) (x - cx), (float) (y - cy), (float) (z - cz)).setColor(r, g, b, Mth.clamp(a, 0.0F, 1.0F)).setUv(u, v).setLight(LightTexture.FULL_BRIGHT);
+        vc.vertex(matrix, (float) (x - cx), (float) (y - cy), (float) (z - cz)).color((int) (Mth.clamp(r, 0.0F, 1.0F) * 255.0F), (int) (Mth.clamp(g, 0.0F, 1.0F) * 255.0F), (int) (Mth.clamp(b, 0.0F, 1.0F) * 255.0F), (int) (Mth.clamp(a, 0.0F, 1.0F) * 255.0F)).uv(u, v).uv2(LightTexture.FULL_BRIGHT).endVertex();
     }
 
     public static void billboard(VertexConsumer vc, double x, double y, double z, float size, float rot, float r, float g, float b, float a) {

@@ -14,8 +14,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.warden.Warden;
 
 public final class WardenResonanceLayer extends RenderLayer<Warden, WardenModel<Warden>> {
-    private static final ResourceLocation VEINS = ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "textures/entity/warden_resonance.png");
-    private static final ResourceLocation SWIRL = ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "textures/entity/warden_swirl.png");
+    private static final ResourceLocation VEINS = new ResourceLocation(WardenPlus.MOD_ID, "textures/entity/warden_resonance.png");
+    private static final ResourceLocation SWIRL = new ResourceLocation(WardenPlus.MOD_ID, "textures/entity/warden_swirl.png");
 
     public WardenResonanceLayer(RenderLayerParent<Warden, WardenModel<Warden>> parent) {
         super(parent);
@@ -44,12 +44,12 @@ public final class WardenResonanceLayer extends RenderLayer<Warden, WardenModel<
         int color = s.stage >= 3
                 ? FastColor.ARGB32.color((int) (alpha * 255), 190, 255, 255)
                 : FastColor.ARGB32.color((int) (alpha * 255), 70, 230, 255);
-        getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(VEINS)), 0xF000F0, OverlayTexture.NO_OVERLAY, color);
+        renderModel(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(VEINS)), color);
         if (s.stage >= 3) {
             float scroll = ageInTicks * 0.008F;
             int swirl = FastColor.ARGB32.color(255, (int) (60 + 60 * heart), (int) (150 + 80 * heart), 200);
             getParentModel().getTendrilsLayerModelParts().forEach(p -> p.skipDraw = true);
-            getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.energySwirl(SWIRL, scroll % 1.0F, (scroll * 0.6F) % 1.0F)), 0xF000F0, OverlayTexture.NO_OVERLAY, swirl);
+            renderModel(pose, buffers.getBuffer(RenderType.energySwirl(SWIRL, scroll % 1.0F, (scroll * 0.6F) % 1.0F)), swirl);
             getParentModel().getTendrilsLayerModelParts().forEach(p -> p.skipDraw = false);
         }
     }
@@ -62,14 +62,22 @@ public final class WardenResonanceLayer extends RenderLayer<Warden, WardenModel<
         int color = s.stage >= 3
                 ? FastColor.ARGB32.color((int) (alpha * 255), 240, 190, 255)
                 : FastColor.ARGB32.color((int) (alpha * 255), 185, 90, 255);
-        getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(VEINS)), 0xF000F0, OverlayTexture.NO_OVERLAY, color);
+        renderModel(pose, buffers.getBuffer(RenderType.entityTranslucentEmissive(VEINS)), color);
         if (s.stage >= 2) {
             float scroll = ageInTicks * 0.006F;
             int strength = s.stage >= 3 ? 150 : 95;
             int swirl = FastColor.ARGB32.color(255, (int) ((70 + 40 * heart) * strength / 150), (int) ((20 + 20 * heart) * strength / 150), (int) ((110 + 60 * heart) * strength / 150));
             getParentModel().getTendrilsLayerModelParts().forEach(p -> p.skipDraw = true);
-            getParentModel().renderToBuffer(pose, buffers.getBuffer(RenderType.energySwirl(SWIRL, (scroll * 0.7F) % 1.0F, scroll % 1.0F)), 0xF000F0, OverlayTexture.NO_OVERLAY, swirl);
+            renderModel(pose, buffers.getBuffer(RenderType.energySwirl(SWIRL, (scroll * 0.7F) % 1.0F, scroll % 1.0F)), swirl);
             getParentModel().getTendrilsLayerModelParts().forEach(p -> p.skipDraw = false);
         }
+    }
+
+    private void renderModel(PoseStack pose, com.mojang.blaze3d.vertex.VertexConsumer consumer, int color) {
+        float alpha = FastColor.ARGB32.alpha(color) / 255.0F;
+        float red = FastColor.ARGB32.red(color) / 255.0F;
+        float green = FastColor.ARGB32.green(color) / 255.0F;
+        float blue = FastColor.ARGB32.blue(color) / 255.0F;
+        getParentModel().renderToBuffer(pose, consumer, 0xF000F0, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
     }
 }

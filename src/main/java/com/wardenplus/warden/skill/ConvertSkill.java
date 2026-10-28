@@ -61,7 +61,7 @@ public final class ConvertSkill extends WardenSkill {
             }
         }
         sound(w, SoundEvents.WARDEN_ROAR, 5.0F, variant == WardenVariant.ENDER ? 0.7F : 0.9F);
-        sound(w, variant == WardenVariant.ENDER ? SoundEvents.END_PORTAL_SPAWN : SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.8F);
+        sound(w, variant == WardenVariant.ENDER ? SoundEvents.END_PORTAL_SPAWN : SoundEvents.GENERIC_EXPLODE, 2.0F, 0.8F);
     }
 
     @Override

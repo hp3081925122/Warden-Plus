@@ -122,7 +122,7 @@ public final class AbyssalBurrowSkill extends WardenSkill {
         Vfx.send(w, Vfx.SHOCK_RING, 14, Vfx.pos(eruptPos, 0.7F, 7.0F, 2, 0.6F));
         Vfx.send(w, Vfx.CRACK, 80, Vfx.pos(eruptPos, 4.0F));
         sound(w, eruptPos, SoundEvents.WARDEN_ATTACK_IMPACT, 4.0F, 0.6F);
-        sound(w, eruptPos, SoundEvents.GENERIC_EXPLODE.value(), 2.5F, 0.7F);
+        sound(w, eruptPos, SoundEvents.GENERIC_EXPLODE, 2.5F, 0.7F);
         sound(w, eruptPos, SoundEvents.WARDEN_ROAR, 2.0F, 1.2F);
     }
 

@@ -2,7 +2,7 @@ package com.wardenplus.network;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public final class Vfx {
     public static final int STAGE = 0;
@@ -59,7 +59,7 @@ public final class Vfx {
     }
 
     public static void send(Entity source, int kind, int duration, float... data) {
-        PacketDistributor.sendToPlayersTrackingEntityAndSelf(source, new VfxPayload(kind, source.getId(), duration, data));
+        WpNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> source), new VfxPayload(kind, source.getId(), duration, data));
     }
 
     public static void anim(Entity source, int anim, int duration) {

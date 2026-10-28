@@ -230,7 +230,7 @@ public final class VoidLoopSkill extends WardenSkill {
         Vfx.send(w, Vfx.VOID_IMPACT, 40, Vfx.pos(at, 1.0F + 0.3F * loops));
         Vfx.send(w, Vfx.SHOCK_RING, 16, Vfx.pos(at, 0.8F, 10.0F, 2, 1.6F, Vfx.PALETTE_ENDER));
         Vfx.send(w, Vfx.CRACK, 120, Vfx.pos(at, 5.0F, Vfx.PALETTE_ENDER));
-        sound(w, at, SoundEvents.GENERIC_EXPLODE.value(), 4.0F, 0.55F);
+        sound(w, at, SoundEvents.GENERIC_EXPLODE, 4.0F, 0.55F);
         sound(w, at, SoundEvents.WARDEN_ATTACK_IMPACT, 5.0F, 0.5F);
         sound(w, at, SoundEvents.ANVIL_LAND, 2.0F, 0.5F);
     }

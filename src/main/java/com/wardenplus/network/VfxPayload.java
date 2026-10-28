@@ -2,38 +2,57 @@ package com.wardenplus.network;
 
 import com.wardenplus.WardenPlus;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record VfxPayload(int kind, int entityId, int duration, float[] data) implements CustomPacketPayload {
-    public static final Type<VfxPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "vfx"));
-    public static final StreamCodec<FriendlyByteBuf, VfxPayload> STREAM_CODEC = StreamCodec.of(VfxPayload::write, VfxPayload::read);
+public final class VfxPayload {
+    public static final ResourceLocation ID = new ResourceLocation(WardenPlus.MOD_ID, "vfx");
+    private final int kind;
+    private final int entityId;
+    private final int duration;
+    private final float[] data;
 
-    private static void write(FriendlyByteBuf buf, VfxPayload p) {
-        buf.writeVarInt(p.kind);
-        buf.writeVarInt(p.entityId);
-        buf.writeVarInt(p.duration);
-        buf.writeVarInt(p.data.length);
-        for (float f : p.data) {
-            buf.writeFloat(f);
+    public VfxPayload(int kind, int entityId, int duration, float[] data) {
+        this.kind = kind;
+        this.entityId = entityId;
+        this.duration = duration;
+        this.data = data;
+    }
+
+    public int kind() {
+        return kind;
+    }
+
+    public int entityId() {
+        return entityId;
+    }
+
+    public int duration() {
+        return duration;
+    }
+
+    public float[] data() {
+        return data;
+    }
+
+    public static void encode(VfxPayload payload, FriendlyByteBuf buffer) {
+        buffer.writeVarInt(payload.kind);
+        buffer.writeVarInt(payload.entityId);
+        buffer.writeVarInt(payload.duration);
+        buffer.writeVarInt(payload.data.length);
+        for (float value : payload.data) {
+            buffer.writeFloat(value);
         }
     }
 
-    private static VfxPayload read(FriendlyByteBuf buf) {
-        int kind = buf.readVarInt();
-        int id = buf.readVarInt();
-        int duration = buf.readVarInt();
-        int n = Math.min(buf.readVarInt(), 256);
-        float[] data = new float[n];
-        for (int i = 0; i < n; i++) {
-            data[i] = buf.readFloat();
+    public static VfxPayload decode(FriendlyByteBuf buffer) {
+        int kind = buffer.readVarInt();
+        int entityId = buffer.readVarInt();
+        int duration = buffer.readVarInt();
+        int length = Math.min(buffer.readVarInt(), 256);
+        float[] data = new float[length];
+        for (int index = 0; index < length; index++) {
+            data[index] = buffer.readFloat();
         }
-        return new VfxPayload(kind, id, duration, data);
-    }
-
-    @Override
-    public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+        return new VfxPayload(kind, entityId, duration, data);
     }
 }

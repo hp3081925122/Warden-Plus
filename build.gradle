@@ -1,75 +1,65 @@
-// 当前文件只保留最小的 NeoForge 开发、构建和运行配置。
+// 当前文件只保留最小的 Forge 开发、构建和运行配置。
 plugins {
-    id 'java-library'
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.1.37'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+repositories {
+    maven {
+        url = 'https://www.cursemaven.com'
+        content { includeGroup 'curse.maven' }
+    }
 }
 
 version = project.mod_version
 group = project.mod_group_id
 
-repositories {
-    mavenLocal()
-    maven { url = 'https://maven.neoforged.net/releases' }
-    maven {
-        url = 'https://www.cursemaven.com'
-        content {
-            includeGroup 'curse.maven'
+base { archivesName = "${project.mod_id}-${project.minecraft_version}-forge" }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: project.mapping_channel, version: project.mapping_version
+    copyIdeResources = true
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods { "${project.mod_id}" { source sourceSets.main } }
         }
-    }
-}
-
-base {
-    archivesName = "${project.mod_id}-${project.minecraft_version}-neoforge"
-}
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
-        modSource project.sourceSets.main
-    }
-
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        client { property 'forge.enabledGameTestNamespaces', project.mod_id }
+        server { args '--nogui' }
+        gameTestServer { property 'forge.enabledGameTestNamespaces', project.mod_id }
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${project.neo_version}"
-    implementation "curse.maven:jei-238222:8792638"
-    implementation "curse.maven:just-enough-characters-250702:8117474"
-    implementation "curse.maven:jade-324717:8591319"
-    // 开发环境加入 Advanced Loot Info，查看战利品表和村民交易信息。
-    implementation "curse.maven:advanced-core-info-1661923:9002615"
-    implementation "curse.maven:advanced-loot-info-1205426:9002619"
+    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    implementation fg.deobf("curse.maven:jei-238222:8778011")
+    implementation fg.deobf("curse.maven:just-enough-characters-250702:8117474")
+    implementation fg.deobf("curse.maven:jade-324717:8591319")
+    implementation fg.deobf("curse.maven:advanced-core-info-1661923:9002615")
+    implementation fg.deobf("curse.maven:advanced-loot-info-1205426:9002619")
+    compileOnly "io.github.llamalad7:mixinextras-common:0.4.1"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:0.4.1"
+    runtimeOnly fg.deobf("io.github.llamalad7:mixinextras-forge:0.4.1")
 }
 
-tasks.withType(ProcessResources).configureEach {
+tasks.named('processResources', ProcessResources).configure {
     def replaceProperties = [
             minecraft_version: project.minecraft_version,
             minecraft_version_range: project.minecraft_version_range,
-            neo_version: project.neo_version,
-            neo_version_range: project.neo_version_range,
+            forge_version: project.forge_version,
+            forge_version_range: project.forge_version_range,
             loader_version_range: project.loader_version_range,
             mod_id: project.mod_id,
             mod_name: project.mod_name,
@@ -79,25 +69,24 @@ tasks.withType(ProcessResources).configureEach {
             mod_description: project.mod_description
     ]
     inputs.properties replaceProperties
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) { expand replaceProperties + [project: project] }
+}
 
-    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties
-    }
+tasks.named('jar', Jar).configure {
+    manifest { attributes([
+            'Specification-Title': project.mod_id,
+            'Specification-Vendor': project.mod_authors,
+            'Specification-Version': '1',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.jar.archiveVersion,
+            'Implementation-Vendor': project.mod_authors
+    ]) }
+    finalizedBy 'reobfJar'
 }
 
 publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/repo"
-        }
-    }
+    publications { register('mavenJava', MavenPublication) { artifact jar } }
+    repositories { maven { url "file://${project.projectDir}/mcmodsrepo" } }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

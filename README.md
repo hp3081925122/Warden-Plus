@@ -1,6 +1,6 @@
 # Warden Plus
 
-Minecraft 1.21.1 NeoForge 模组。用末影珍珠右键普通监守者，将其转化为末影监守者。
+Minecraft 1.20.1 Forge 模组。用末影珍珠右键普通监守者，将其转化为末影监守者。
 
 ## 末影监守者
 

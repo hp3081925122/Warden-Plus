@@ -4,48 +4,48 @@ import com.wardenplus.warden.SkillType;
 import com.wardenplus.warden.WardenVariant;
 import java.util.EnumMap;
 import java.util.Map;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public final class WpConfig {
-    public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED;
-    public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER;
-    public static final ModConfigSpec.DoubleValue SKILL_DAMAGE_MULTIPLIER;
-    public static final ModConfigSpec.DoubleValue KNOCKBACK_SCALE;
-    public static final ModConfigSpec.DoubleValue STAGE_TWO_THRESHOLD;
-    public static final ModConfigSpec.DoubleValue STAGE_THREE_THRESHOLD;
-    public static final ModConfigSpec.IntValue TRANSITION_INVULNERABLE_TICKS;
-    public static final ModConfigSpec.DoubleValue LATE_STAGE_COOLDOWN_SCALE;
-    public static final ModConfigSpec.IntValue GLOBAL_COOLDOWN;
-    public static final ModConfigSpec.DoubleValue AWAKEN_DAMAGE_TAKEN;
-    public static final ModConfigSpec.BooleanValue BOSS_BAR;
-    public static final ModConfigSpec.IntValue BOSS_BAR_RANGE;
-    public static final ModConfigSpec.BooleanValue CONVERSION_ENABLED;
-    public static final ModConfigSpec.ConfigValue<String> ECHO_ITEM;
-    public static final ModConfigSpec.BooleanValue ECHO_ENABLED;
-    public static final ModConfigSpec.ConfigValue<String> ENDER_ITEM;
-    public static final ModConfigSpec.BooleanValue CONSUME_ITEM;
-    public static final ModConfigSpec.DoubleValue ENDER_HEALTH_MULTIPLIER;
-    public static final ModConfigSpec.DoubleValue ENDER_ATTACK_MULTIPLIER;
-    public static final ModConfigSpec.DoubleValue TOUCH_CHANCE;
-    public static final ModConfigSpec.IntValue TOUCH_COOLDOWN;
-    public static final ModConfigSpec.DoubleValue TOUCH_MIN_DISTANCE;
-    public static final ModConfigSpec.DoubleValue TOUCH_MAX_DISTANCE;
-    public static final ModConfigSpec.DoubleValue DODGE_CHANCE;
-    public static final ModConfigSpec.IntValue DODGE_COOLDOWN;
-    public static final ModConfigSpec.IntValue SONIC_MIN_JUMPS;
-    public static final ModConfigSpec.IntValue SONIC_MAX_JUMPS;
-    public static final ModConfigSpec.IntValue SONIC_STUN_TICKS;
-    public static final ModConfigSpec.DoubleValue SONIC_STUN_DAMAGE_TAKEN;
-    public static final ModConfigSpec.DoubleValue DARKNESS_RADIUS;
-    public static final ModConfigSpec.DoubleValue DARKNESS_VISIBILITY;
+    public static final ForgeConfigSpec SPEC;
+    public static final ForgeConfigSpec.BooleanValue ENABLED;
+    public static final ForgeConfigSpec.DoubleValue HEALTH_MULTIPLIER;
+    public static final ForgeConfigSpec.DoubleValue SKILL_DAMAGE_MULTIPLIER;
+    public static final ForgeConfigSpec.DoubleValue KNOCKBACK_SCALE;
+    public static final ForgeConfigSpec.DoubleValue STAGE_TWO_THRESHOLD;
+    public static final ForgeConfigSpec.DoubleValue STAGE_THREE_THRESHOLD;
+    public static final ForgeConfigSpec.IntValue TRANSITION_INVULNERABLE_TICKS;
+    public static final ForgeConfigSpec.DoubleValue LATE_STAGE_COOLDOWN_SCALE;
+    public static final ForgeConfigSpec.IntValue GLOBAL_COOLDOWN;
+    public static final ForgeConfigSpec.DoubleValue AWAKEN_DAMAGE_TAKEN;
+    public static final ForgeConfigSpec.BooleanValue BOSS_BAR;
+    public static final ForgeConfigSpec.IntValue BOSS_BAR_RANGE;
+    public static final ForgeConfigSpec.BooleanValue CONVERSION_ENABLED;
+    public static final ForgeConfigSpec.ConfigValue<String> ECHO_ITEM;
+    public static final ForgeConfigSpec.BooleanValue ECHO_ENABLED;
+    public static final ForgeConfigSpec.ConfigValue<String> ENDER_ITEM;
+    public static final ForgeConfigSpec.BooleanValue CONSUME_ITEM;
+    public static final ForgeConfigSpec.DoubleValue ENDER_HEALTH_MULTIPLIER;
+    public static final ForgeConfigSpec.DoubleValue ENDER_ATTACK_MULTIPLIER;
+    public static final ForgeConfigSpec.DoubleValue TOUCH_CHANCE;
+    public static final ForgeConfigSpec.IntValue TOUCH_COOLDOWN;
+    public static final ForgeConfigSpec.DoubleValue TOUCH_MIN_DISTANCE;
+    public static final ForgeConfigSpec.DoubleValue TOUCH_MAX_DISTANCE;
+    public static final ForgeConfigSpec.DoubleValue DODGE_CHANCE;
+    public static final ForgeConfigSpec.IntValue DODGE_COOLDOWN;
+    public static final ForgeConfigSpec.IntValue SONIC_MIN_JUMPS;
+    public static final ForgeConfigSpec.IntValue SONIC_MAX_JUMPS;
+    public static final ForgeConfigSpec.IntValue SONIC_STUN_TICKS;
+    public static final ForgeConfigSpec.DoubleValue SONIC_STUN_DAMAGE_TAKEN;
+    public static final ForgeConfigSpec.DoubleValue DARKNESS_RADIUS;
+    public static final ForgeConfigSpec.DoubleValue DARKNESS_VISIBILITY;
     public static final Map<SkillType, Skill> SKILLS = new EnumMap<>(SkillType.class);
 
-    public record Skill(ModConfigSpec.BooleanValue enabled, ModConfigSpec.DoubleValue damage, ModConfigSpec.IntValue cooldown) {
+    public record Skill(ForgeConfigSpec.BooleanValue enabled, ForgeConfigSpec.DoubleValue damage, ForgeConfigSpec.IntValue cooldown) {
     }
 
     static {
-        ModConfigSpec.Builder b = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
         b.comment("监守者增强总设置 / General settings for the enhanced Warden").push("general");
         ENABLED = b.comment("是否启用重做后的监守者技能 / Enable reworked Warden skills").define("enabled", true);
         HEALTH_MULTIPLIER = b.comment("回响监守者最大生命倍率，只在转化时应用一次 / Echo Warden max health multiplier, applied once on conversion").defineInRange("healthMultiplier", 1.0, 0.1, 100.0);
@@ -81,23 +81,23 @@ public final class WpConfig {
         SONIC_STUN_TICKS = b.comment("裂隙千音结束后的宕机时间（刻） / Stun after Rift Sonic Barrage in ticks").defineInRange("sonicStunTicks", 60, 0, 600);
         SONIC_STUN_DAMAGE_TAKEN = b.comment("宕机期间受到伤害的倍率 / Damage taken multiplier while stunned").defineInRange("sonicStunDamageTaken", 1.25, 0.0, 10.0);
         DARKNESS_RADIUS = b.comment("裂隙千音致盲范围（格） / Rift Sonic Barrage darkness radius").defineInRange("darknessRadius", 40.0, 0.0, 256.0);
-        DARKNESS_VISIBILITY = b.comment("裂隙千音黑暗中的可见距离（格），会随黑暗脉动缩短到一半；0 为全黑，原版黑暗约为 15；技能特效与预警不受影响 / Visible distance inside the Rift Sonic Barrage darkness, shrinks to half with the darkness pulse; 0 is pitch black, vanilla Darkness is about 15; skill effects and warnings stay visible").defineInRange("darknessVisibility", 2.5, 0.0, 64.0);
+        DARKNESS_VISIBILITY = b.comment("裂隙千音黑暗中的可见距离（格），会随黑暗脉动缩短到一半；0 为全黑，原版黑暗约为 15；技能特效与预警不受影响 / Visible distance inside the Rift Sonic Barrage darkness, shrinks to half with the darkness pulse; 0 is pitch black, vanilla Darkness is about 15; skill effects and warnings stay visible").defineInRange("darknessVisibility", 7.0, 0.0, 64.0);
         b.pop();
         defineSkills(b, WardenVariant.ECHO, "skills", "回响监守者各技能设置，伤害为攻击力倍率 / Echo Warden skills, damage is a ratio of attack damage");
         defineSkills(b, WardenVariant.ENDER, "ender_skills", "末影监守者各技能设置，伤害为攻击力倍率 / Ender Warden skills, damage is a ratio of attack damage");
         SPEC = b.build();
     }
 
-    private static void defineSkills(ModConfigSpec.Builder b, WardenVariant variant, String path, String comment) {
+    private static void defineSkills(ForgeConfigSpec.Builder b, WardenVariant variant, String path, String comment) {
         b.comment(comment).push(path);
         for (SkillType type : SkillType.values()) {
             if (type.variant != variant) {
                 continue;
             }
             b.comment(type.zhName + " / " + type.enName).push(type.key);
-            ModConfigSpec.BooleanValue enabled = b.comment("是否启用 / Enabled").define("enabled", true);
-            ModConfigSpec.DoubleValue damage = b.comment("伤害倍率 / Damage ratio").defineInRange("damageRatio", type.defaultDamage, 0.0, 20.0);
-            ModConfigSpec.IntValue cooldown = b.comment("冷却（刻） / Cooldown in ticks").defineInRange("cooldown", type.defaultCooldown, 0, 72000);
+            ForgeConfigSpec.BooleanValue enabled = b.comment("是否启用 / Enabled").define("enabled", true);
+            ForgeConfigSpec.DoubleValue damage = b.comment("伤害倍率 / Damage ratio").defineInRange("damageRatio", type.defaultDamage, 0.0, 20.0);
+            ForgeConfigSpec.IntValue cooldown = b.comment("冷却（刻） / Cooldown in ticks").defineInRange("cooldown", type.defaultCooldown, 0, 72000);
             SKILLS.put(type, new Skill(enabled, damage, cooldown));
             b.pop();
         }

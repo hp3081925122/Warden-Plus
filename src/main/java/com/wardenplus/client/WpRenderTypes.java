@@ -27,13 +27,13 @@ public final class WpRenderTypes {
             false,
             true,
             RenderType.CompositeState.builder()
-                    .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
+                    .setShaderState(StateAccess.positionColorTexLightmapShader())
                     .setTextureState(new RenderStateShard.TextureStateShard(t, false, false))
-                    .setTransparencyState(RenderStateShard.LIGHTNING_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
-                    .setLightmapState(RenderStateShard.LIGHTMAP)
-                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(StateAccess.lightningTransparency())
+                    .setCullState(StateAccess.noCull())
+                    .setLightmapState(StateAccess.lightmap())
+                    .setWriteMaskState(StateAccess.colorWrite())
+                    .setDepthTestState(StateAccess.lequalDepthTest())
                     .createCompositeState(false)));
 
     private static final Function<ResourceLocation, RenderType> TRANSLUCENT = Util.memoize(t -> RenderType.create(
@@ -44,13 +44,13 @@ public final class WpRenderTypes {
             false,
             true,
             RenderType.CompositeState.builder()
-                    .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
+                    .setShaderState(StateAccess.positionColorTexLightmapShader())
                     .setTextureState(new RenderStateShard.TextureStateShard(t, false, false))
-                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
-                    .setLightmapState(RenderStateShard.LIGHTMAP)
-                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(StateAccess.translucentTransparency())
+                    .setCullState(StateAccess.noCull())
+                    .setLightmapState(StateAccess.lightmap())
+                    .setWriteMaskState(StateAccess.colorWrite())
+                    .setDepthTestState(StateAccess.lequalDepthTest())
                     .createCompositeState(false)));
 
     public static final RenderType SOLID = RenderType.create(
@@ -61,20 +61,20 @@ public final class WpRenderTypes {
             true,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
+                    .setShaderState(StateAccess.positionColorTexLightmapShader())
                     .setTextureState(new RenderStateShard.TextureStateShard(WHITE, false, false))
-                    .setTransparencyState(RenderStateShard.NO_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
-                    .setLightmapState(RenderStateShard.LIGHTMAP)
-                    .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
-                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(StateAccess.noTransparency())
+                    .setCullState(StateAccess.noCull())
+                    .setLightmapState(StateAccess.lightmap())
+                    .setWriteMaskState(StateAccess.colorDepthWrite())
+                    .setDepthTestState(StateAccess.lequalDepthTest())
                     .createCompositeState(false));
 
     private WpRenderTypes() {
     }
 
     private static ResourceLocation tex(String name) {
-        return ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "textures/vfx/" + name + ".png");
+        return new ResourceLocation(WardenPlus.MOD_ID, "textures/vfx/" + name + ".png");
     }
 
     public static RenderType additive(ResourceLocation texture) {
@@ -83,5 +83,49 @@ public final class WpRenderTypes {
 
     public static RenderType translucent(ResourceLocation texture) {
         return TRANSLUCENT.apply(texture);
+    }
+
+    private static final class StateAccess extends RenderStateShard {
+        private StateAccess() {
+            super("wardenplus_state_access", () -> {
+            }, () -> {
+            });
+        }
+
+        private static ShaderStateShard positionColorTexLightmapShader() {
+            return POSITION_COLOR_TEX_LIGHTMAP_SHADER;
+        }
+
+        private static TransparencyStateShard lightningTransparency() {
+            return LIGHTNING_TRANSPARENCY;
+        }
+
+        private static TransparencyStateShard translucentTransparency() {
+            return TRANSLUCENT_TRANSPARENCY;
+        }
+
+        private static TransparencyStateShard noTransparency() {
+            return NO_TRANSPARENCY;
+        }
+
+        private static CullStateShard noCull() {
+            return NO_CULL;
+        }
+
+        private static LightmapStateShard lightmap() {
+            return LIGHTMAP;
+        }
+
+        private static WriteMaskStateShard colorWrite() {
+            return COLOR_WRITE;
+        }
+
+        private static WriteMaskStateShard colorDepthWrite() {
+            return COLOR_DEPTH_WRITE;
+        }
+
+        private static DepthTestStateShard lequalDepthTest() {
+            return LEQUAL_DEPTH_TEST;
+        }
     }
 }

@@ -49,7 +49,7 @@ public final class AwakenSkill extends WardenSkill {
         Vfx.send(w, Vfx.SHOCK_RING, 16, Vfx.pos(center, 0.85F, 12.0F, 0, 1.4F));
         Vfx.send(w, Vfx.CRACK, 120, Vfx.pos(center, 7.0F));
         sound(w, SoundEvents.WARDEN_HEARTBEAT, 8.0F, 0.5F);
-        sound(w, SoundEvents.GENERIC_EXPLODE.value(), 3.0F, 0.5F);
+        sound(w, SoundEvents.GENERIC_EXPLODE, 3.0F, 0.5F);
     }
 
     @Override

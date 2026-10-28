@@ -1,9 +1,9 @@
 package com.wardenplus.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -83,9 +83,9 @@ public final class ScreenFx {
         return shake <= 0 ? 0 : (RANDOM.nextFloat() - 0.5F) * shake * 1.2F;
     }
 
-    public static void render(GuiGraphics g, DeltaTracker delta) {
-        int w = g.guiWidth();
-        int h = g.guiHeight();
+    public static void render(ForgeGui gui, GuiGraphics g, float partialTick, int width, int height) {
+        int w = width;
+        int h = height;
         float v = Mth.clamp(vignette + pulse, 0, 1);
         if (v > 0.01F) {
             RenderSystem.enableBlend();

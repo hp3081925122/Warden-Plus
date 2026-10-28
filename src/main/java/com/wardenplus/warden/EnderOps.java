@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.wardenplus.WpConfig;
 import com.wardenplus.network.Vfx;
 import com.wardenplus.network.VfxPayload;
+import com.wardenplus.network.WpNetwork;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import org.slf4j.Logger;
 
 public final class EnderOps {
@@ -28,7 +29,7 @@ public final class EnderOps {
 
     public static Vec3 findSpot(Entity e, Vec3 center, double minR, double maxR, int attempts) {
         Level level = e.level();
-        RandomSource random = e.getRandom();
+        RandomSource random = e instanceof LivingEntity living ? living.getRandom() : level.getRandom();
         for (int i = 0; i < attempts; i++) {
             double a = random.nextDouble() * Math.PI * 2;
             double r = minR + random.nextDouble() * Math.max(0, maxR - minR);
@@ -112,7 +113,7 @@ public final class EnderOps {
             if (player.isSpectator() || player.distanceToSqr(source) > radius * radius) {
                 continue;
             }
-            PacketDistributor.sendToPlayer(player, new VfxPayload(Vfx.DARKNESS, source.getId(), ticks, new float[]{WpConfig.DARKNESS_VISIBILITY.get().floatValue()}));
+            WpNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new VfxPayload(Vfx.DARKNESS, source.getId(), ticks, new float[]{WpConfig.DARKNESS_VISIBILITY.get().floatValue()}));
             count++;
         }
         return count;

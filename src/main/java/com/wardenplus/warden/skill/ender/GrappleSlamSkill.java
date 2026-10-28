@@ -166,7 +166,7 @@ public final class GrappleSlamSkill extends WardenSkill {
         Vfx.send(w, Vfx.CRACK, 100, Vfx.pos(at, last ? 4.5F : 3.5F, Vfx.PALETTE_ENDER));
         Vfx.send(w, Vfx.VOID_IMPACT, 30, Vfx.pos(at, last ? 0.9F : 0.6F));
         sound(w, at, SoundEvents.WARDEN_ATTACK_IMPACT, 4.0F, 0.55F);
-        sound(w, at, SoundEvents.GENERIC_EXPLODE.value(), last ? 3.0F : 2.0F, 0.7F);
+        sound(w, at, SoundEvents.GENERIC_EXPLODE, last ? 3.0F : 2.0F, 0.7F);
         sound(w, at, SoundEvents.ANVIL_LAND, 1.5F, 0.5F);
     }
 

@@ -4,13 +4,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.wardenplus.WardenPlus;
 import com.wardenplus.client.vfx.VfxManager;
 import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.util.Mth;
 
@@ -20,7 +20,10 @@ public final class ClientGameEvents {
     }
 
     @SubscribeEvent
-    public static void onTick(ClientTickEvent.Post event) {
+    public static void onTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.isPaused()) {
             return;
@@ -39,7 +42,7 @@ public final class ClientGameEvents {
         if (pose == null) {
             pose = new PoseStack();
         }
-        float partial = event.getPartialTick().getGameTimeDeltaPartialTick(false);
+        float partial = event.getPartialTick();
         Draw.begin(pose.last(), event.getCamera(), partial);
         VfxManager.render(partial);
         Draw.end();
@@ -66,7 +69,6 @@ public final class ClientGameEvents {
         float near = event.getMode() == FogRenderer.FogMode.FOG_SKY || target < 1.0F ? 0.0F : far * 0.3F;
         event.setFarPlaneDistance(far);
         event.setNearPlaneDistance(Math.min(far, Mth.lerp(f, event.getNearPlaneDistance(), near)));
-        event.setCanceled(true);
     }
 
     @SubscribeEvent

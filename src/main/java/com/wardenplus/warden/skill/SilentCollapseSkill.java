@@ -77,7 +77,7 @@ public final class SilentCollapseSkill extends WardenSkill {
             }
         }
         Vfx.send(w, Vfx.BLAST, 26, Vfx.pos(core, (float) RADIUS));
-        sound(w, SoundEvents.GENERIC_EXPLODE.value(), 5.0F, 0.45F);
+        sound(w, SoundEvents.GENERIC_EXPLODE, 5.0F, 0.45F);
         sound(w, SoundEvents.WARDEN_ATTACK_IMPACT, 5.0F, 0.5F);
         sound(w, SoundEvents.WARDEN_SONIC_BOOM, 2.0F, 0.5F);
     }

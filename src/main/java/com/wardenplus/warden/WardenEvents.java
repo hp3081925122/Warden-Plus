@@ -5,10 +5,11 @@ import com.wardenplus.WpConfig;
 import com.wardenplus.client.ClientWardenState;
 import com.wardenplus.network.Vfx;
 import com.wardenplus.network.VfxPayload;
+import com.wardenplus.network.WpNetwork;
 import com.wardenplus.warden.skill.ConvertSkill;
+import java.util.UUID;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Unit;
@@ -24,27 +25,28 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 @EventBusSubscriber(modid = WardenPlus.MOD_ID)
 public final class WardenEvents {
-    private static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "health_bonus");
-    private static final ResourceLocation ATTACK_ID = ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "attack_bonus");
+    private static final UUID HEALTH_ID = UUID.fromString("7c9a7f82-4ec6-4f20-8ac4-1d1e0c4a4b10");
+    private static final UUID ATTACK_ID = UUID.fromString("3b41cc8e-76ba-4ca0-8e0b-4c0f1e1d9f3b");
 
     private WardenEvents() {
     }
 
     @SubscribeEvent
-    public static void onTick(EntityTickEvent.Post event) {
+    public static void onTick(LivingEvent.LivingTickEvent event) {
         if (!(event.getEntity() instanceof Warden warden) || warden.level().isClientSide()) {
             return;
         }
@@ -142,7 +144,7 @@ public final class WardenEvents {
         if (health != null) {
             health.removeModifier(HEALTH_ID);
             if (Math.abs(healthMult - 1.0) > 1.0E-6) {
-                health.addPermanentModifier(new AttributeModifier(HEALTH_ID, healthMult - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                health.addPermanentModifier(new AttributeModifier(HEALTH_ID, "wardenplus_health_bonus", healthMult - 1.0, AttributeModifier.Operation.MULTIPLY_TOTAL));
             }
             warden.setHealth(warden.getMaxHealth());
         }
@@ -151,7 +153,7 @@ public final class WardenEvents {
             AttributeInstance attack = warden.getAttribute(Attributes.ATTACK_DAMAGE);
             if (attack != null && Math.abs(attackMult - 1.0) > 1.0E-6) {
                 attack.removeModifier(ATTACK_ID);
-                attack.addPermanentModifier(new AttributeModifier(ATTACK_ID, attackMult - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                attack.addPermanentModifier(new AttributeModifier(ATTACK_ID, "wardenplus_attack_bonus", attackMult - 1.0, AttributeModifier.Operation.MULTIPLY_TOTAL));
             }
         }
     }
@@ -164,7 +166,7 @@ public final class WardenEvents {
     }
 
     @SubscribeEvent
-    public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+    public static void onIncomingDamage(LivingAttackEvent event) {
         if (!(event.getEntity() instanceof Warden warden) || warden.level().isClientSide()) {
             return;
         }
@@ -180,7 +182,15 @@ public final class WardenEvents {
             event.setCanceled(true);
             return;
         }
-        if (c.damageTakenScale != 1.0F) {
+    }
+
+    @SubscribeEvent
+    public static void onHurt(LivingHurtEvent event) {
+        if (!(event.getEntity() instanceof Warden warden) || warden.level().isClientSide()) {
+            return;
+        }
+        WardenController c = WardenControllers.peek(warden);
+        if (c != null && c.damageTakenScale != 1.0F) {
             event.setAmount(event.getAmount() * c.damageTakenScale);
         }
     }
@@ -201,12 +211,12 @@ public final class WardenEvents {
     }
 
     @SubscribeEvent
-    public static void onDamaged(LivingDamageEvent.Post event) {
+    public static void onDamaged(LivingDamageEvent event) {
         DamageSource source = event.getSource();
         if (!(source.getEntity() instanceof Warden warden) || source.getDirectEntity() != warden || warden.level().isClientSide()) {
             return;
         }
-        if (!source.is(DamageTypes.MOB_ATTACK) || event.getNewDamage() <= 0) {
+        if (!source.is(DamageTypes.MOB_ATTACK) || event.getAmount() <= 0) {
             return;
         }
         WardenController c = WardenControllers.peek(warden);
@@ -214,7 +224,7 @@ public final class WardenEvents {
             return;
         }
         LivingEntity victim = event.getEntity();
-        if (!victim.isAlive() || victim.isPassenger() || warden.getRandom().nextDouble() >= WpConfig.TOUCH_CHANCE.get()) {
+        if (!victim.isAlive() || victim.isPassenger() || victim.getHealth() <= event.getAmount() || warden.getRandom().nextDouble() >= WpConfig.TOUCH_CHANCE.get()) {
             return;
         }
         double min = WpConfig.TOUCH_MIN_DISTANCE.get();
@@ -233,10 +243,10 @@ public final class WardenEvents {
         if (variant == WardenVariant.NONE) {
             return;
         }
-        PacketDistributor.sendToPlayer(player, new VfxPayload(Vfx.VARIANT, warden.getId(), 0, new float[]{variant.ordinal()}));
+        WpNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new VfxPayload(Vfx.VARIANT, warden.getId(), 0, new float[]{variant.ordinal()}));
         WardenController c = WardenControllers.get(warden);
         if (c != null && c.stage() > 1) {
-            PacketDistributor.sendToPlayer(player, new VfxPayload(Vfx.STAGE, warden.getId(), 0, new float[]{c.stage()}));
+            WpNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new VfxPayload(Vfx.STAGE, warden.getId(), 0, new float[]{c.stage()}));
         }
     }
 }

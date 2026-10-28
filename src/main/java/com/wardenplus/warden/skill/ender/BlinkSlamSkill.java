@@ -84,7 +84,7 @@ public final class BlinkSlamSkill extends WardenSkill {
             Vec3 center = EnderFx.ground(w, front);
             EnderFx.slam(c, center, Combat.damage(w, SkillType.BLINK_SLAM), 3.2, 2, 9.0);
             sound(w, center, SoundEvents.WARDEN_ATTACK_IMPACT, 4.0F, 0.6F);
-            sound(w, center, SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.75F);
+            sound(w, center, SoundEvents.GENERIC_EXPLODE, 2.0F, 0.75F);
             blinkIndex++;
             if (blinkIndex < blinks) {
                 beginBlink(c, target, t + 1);

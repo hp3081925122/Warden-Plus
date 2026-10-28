@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class LightTextureMixin {
     @ModifyReturnValue(method = "getDarknessGamma", at = @At("RETURN"))
     private float wardenplus$darkness(float original) {
-        return Math.max(original, ClientDarkness.factor(Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false)));
+        return Math.max(original, ClientDarkness.factor(Minecraft.getInstance().getFrameTime()));
     }
 }

@@ -207,7 +207,7 @@ public final class RiftOctetSkill extends WardenSkill {
         Vfx.send(w, Vfx.CRACK, 110, Vfx.pos(center, (float) BLAST + 0.5F, Vfx.PALETTE_ENDER));
         Vfx.send(w, Vfx.VOID_IMPACT, 36, Vfx.pos(center, 1.1F));
         sound(w, center, SoundEvents.WARDEN_SONIC_BOOM, 4.0F, 0.7F);
-        sound(w, center, SoundEvents.GENERIC_EXPLODE.value(), 3.0F, 0.6F);
+        sound(w, center, SoundEvents.GENERIC_EXPLODE, 3.0F, 0.6F);
     }
 
     private void beginStun(WardenController c) {
