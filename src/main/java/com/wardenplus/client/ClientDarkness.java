@@ -48,6 +48,13 @@ public final class ClientDarkness {
         return Mth.lerp(partial, factorO, factor);
     }
 
+    public static float pulse(float partial) {
+        if (Minecraft.getInstance().player == null) {
+            return 0;
+        }
+        return Math.max(0.0F, Mth.cos((Minecraft.getInstance().player.tickCount - partial) * Mth.PI * 0.025F));
+    }
+
     public static float visibility() {
         return visibility;
     }
