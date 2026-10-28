@@ -12,11 +12,13 @@ public final class ClientDarkness {
     private static int total;
     private static float factor;
     private static float factorO;
+    private static float visibility = 15.0F;
 
     private ClientDarkness() {
     }
 
-    public static void apply(int ticks) {
+    public static void apply(int ticks, float distance) {
+        visibility = Math.max(0.0F, distance);
         if (remaining <= 0) {
             LOGGER.debug("[WardenPlus] Client darkness started, hold {} ticks, darknessEffectScale {}", ticks, Minecraft.getInstance().options.darknessEffectScale().get());
         }
@@ -44,6 +46,10 @@ public final class ClientDarkness {
             return 0;
         }
         return Mth.lerp(partial, factorO, factor);
+    }
+
+    public static float visibility() {
+        return visibility;
     }
 
     public static void clear() {

@@ -79,7 +79,7 @@ public final class ClientPayloads {
             case Vfx.BLAST -> VfxManager.add(new BlastVfx(id, pos(d, 0), d[3], life));
             case Vfx.AWAKEN -> VfxManager.add(new AwakenVfx(id, life));
             case Vfx.VARIANT -> ClientWardenState.get(id).variant = (int) d[0];
-            case Vfx.DARKNESS -> ClientDarkness.apply(life);
+            case Vfx.DARKNESS -> ClientDarkness.apply(life, d.length > 0 ? d[0] : 15.0F);
             case Vfx.ENDER_TRAIL -> VfxManager.add(new EnderTrailVfx(id, pos(d, 0), pos(d, 3), d[6], (int) d[7], life));
             case Vfx.SOUL_GATHER -> VfxManager.add(new SoulGatherVfx(id, life));
             case Vfx.SONIC_TRACK -> VfxManager.add(new SonicTrackVfx(id, (int) d[0], life));

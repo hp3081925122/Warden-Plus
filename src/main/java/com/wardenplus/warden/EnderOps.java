@@ -1,6 +1,7 @@
 package com.wardenplus.warden;
 
 import com.mojang.logging.LogUtils;
+import com.wardenplus.WpConfig;
 import com.wardenplus.network.Vfx;
 import com.wardenplus.network.VfxPayload;
 import net.minecraft.server.level.ServerLevel;
@@ -111,7 +112,7 @@ public final class EnderOps {
             if (player.isSpectator() || player.distanceToSqr(source) > radius * radius) {
                 continue;
             }
-            PacketDistributor.sendToPlayer(player, new VfxPayload(Vfx.DARKNESS, source.getId(), ticks, new float[0]));
+            PacketDistributor.sendToPlayer(player, new VfxPayload(Vfx.DARKNESS, source.getId(), ticks, new float[]{WpConfig.DARKNESS_VISIBILITY.get().floatValue()}));
             count++;
         }
         return count;

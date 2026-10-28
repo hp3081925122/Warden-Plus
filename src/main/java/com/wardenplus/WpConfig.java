@@ -38,6 +38,7 @@ public final class WpConfig {
     public static final ModConfigSpec.IntValue SONIC_STUN_TICKS;
     public static final ModConfigSpec.DoubleValue SONIC_STUN_DAMAGE_TAKEN;
     public static final ModConfigSpec.DoubleValue DARKNESS_RADIUS;
+    public static final ModConfigSpec.DoubleValue DARKNESS_VISIBILITY;
     public static final Map<SkillType, Skill> SKILLS = new EnumMap<>(SkillType.class);
 
     public record Skill(ModConfigSpec.BooleanValue enabled, ModConfigSpec.DoubleValue damage, ModConfigSpec.IntValue cooldown) {
@@ -80,6 +81,7 @@ public final class WpConfig {
         SONIC_STUN_TICKS = b.comment("裂隙千音结束后的宕机时间（刻） / Stun after Rift Sonic Barrage in ticks").defineInRange("sonicStunTicks", 60, 0, 600);
         SONIC_STUN_DAMAGE_TAKEN = b.comment("宕机期间受到伤害的倍率 / Damage taken multiplier while stunned").defineInRange("sonicStunDamageTaken", 1.25, 0.0, 10.0);
         DARKNESS_RADIUS = b.comment("裂隙千音致盲范围（格） / Rift Sonic Barrage darkness radius").defineInRange("darknessRadius", 40.0, 0.0, 256.0);
+        DARKNESS_VISIBILITY = b.comment("裂隙千音黑暗中的可见距离（格），0 为全黑，原版黑暗约为 15；技能特效与预警不受影响 / Visible distance inside the Rift Sonic Barrage darkness, 0 is pitch black, vanilla Darkness is about 15; skill effects and warnings stay visible").defineInRange("darknessVisibility", 0.0, 0.0, 64.0);
         b.pop();
         defineSkills(b, WardenVariant.ECHO, "skills", "回响监守者各技能设置，伤害为攻击力倍率 / Echo Warden skills, damage is a ratio of attack damage");
         defineSkills(b, WardenVariant.ENDER, "ender_skills", "末影监守者各技能设置，伤害为攻击力倍率 / Ender Warden skills, damage is a ratio of attack damage");

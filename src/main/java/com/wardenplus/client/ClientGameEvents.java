@@ -58,12 +58,14 @@ public final class ClientGameEvents {
         if (f <= 0.0F) {
             return;
         }
-        float far = Mth.lerp(f, event.getFarPlaneDistance(), 15.0F);
+        float target = Math.max(0.05F, ClientDarkness.visibility());
+        float far = Mth.lerp(f, event.getFarPlaneDistance(), target);
         if (far >= event.getFarPlaneDistance()) {
             return;
         }
+        float near = event.getMode() == FogRenderer.FogMode.FOG_SKY || target < 1.0F ? 0.0F : far * 0.75F;
         event.setFarPlaneDistance(far);
-        event.setNearPlaneDistance(event.getMode() == FogRenderer.FogMode.FOG_SKY ? 0.0F : far * 0.75F);
+        event.setNearPlaneDistance(Math.min(far, Mth.lerp(f, event.getNearPlaneDistance(), near)));
         event.setCanceled(true);
     }
 
