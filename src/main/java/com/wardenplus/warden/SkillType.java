@@ -10,6 +10,7 @@ import com.wardenplus.warden.skill.SilentCollapseSkill;
 import com.wardenplus.warden.skill.WardenSkill;
 import com.wardenplus.warden.skill.ender.BlinkSlamSkill;
 import com.wardenplus.warden.skill.ender.RiftHuntSkill;
+import com.wardenplus.warden.skill.ender.RiftOctetSkill;
 import com.wardenplus.warden.skill.ender.RiftSonicSkill;
 import com.wardenplus.warden.skill.ender.VoidLoopSkill;
 import com.wardenplus.warden.skill.ender.EnderSwapSkill;
@@ -30,6 +31,7 @@ public enum SkillType {
     VOID_LOOP(WardenVariant.ENDER, "void_loop", "虚空回环摔", "Void Loop Slam", 1.0, 600, 1, 0.0, 4.5, 1, false, VoidLoopSkill::new, VoidLoopSkill::canStart),
     ENDER_SWAP(WardenVariant.ENDER, "ender_swap", "末影置换", "Ender Swap", 0.4, 420, 2, 6.0, 26.0, 2, false, EnderSwapSkill::new, EnderSwapSkill::canStart),
     RIFT_HUNT(WardenVariant.ENDER, "rift_hunt", "裂隙追猎", "Rift Hunt", 0.5, 200, 1, 18.0, 48.0, 3, false, RiftHuntSkill::new, RiftHuntSkill::canStart),
+    RIFT_OCTET(WardenVariant.ENDER, "rift_octet", "八方裂隙", "Rift Octet", 0.35, 560, 1, 4.0, 30.0, 2, false, RiftOctetSkill::new, RiftOctetSkill::canStart),
     RIFT_SONIC(WardenVariant.ENDER, "rift_sonic", "裂隙千音", "Rift Sonic Barrage", 0.4, 1200, 2, 0.0, 40.0, 1, false, RiftSonicSkill::new);
 
     public interface Check {

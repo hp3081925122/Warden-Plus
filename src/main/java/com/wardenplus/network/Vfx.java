@@ -32,6 +32,7 @@ public final class Vfx {
     public static final int STUN = 28;
     public static final int ENTITY_MARK = 29;
     public static final int VOID_IMPACT = 30;
+    public static final int RIFT_ZONE = 31;
 
     public static final int PALETTE_ECHO = 0;
     public static final int PALETTE_ENDER = 1;

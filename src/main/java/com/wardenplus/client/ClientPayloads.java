@@ -18,6 +18,7 @@ import com.wardenplus.client.vfx.ConvertVfx;
 import com.wardenplus.client.vfx.EnderTrailVfx;
 import com.wardenplus.client.vfx.MarkVfx;
 import com.wardenplus.client.vfx.RiftVfx;
+import com.wardenplus.client.vfx.RiftZoneVfx;
 import com.wardenplus.client.vfx.SonicLockVfx;
 import com.wardenplus.client.vfx.SonicTrackVfx;
 import com.wardenplus.client.vfx.SoulGatherVfx;
@@ -92,6 +93,7 @@ public final class ClientPayloads {
             case Vfx.CONVERT -> VfxManager.add(new ConvertVfx(id, (int) d[0], (int) d[1], life));
             case Vfx.STUN -> VfxManager.add(new StunVfx(id, life));
             case Vfx.ENTITY_MARK -> VfxManager.add(new MarkVfx(id, (int) d[0], d[1], life));
+            case Vfx.RIFT_ZONE -> VfxManager.add(new RiftZoneVfx(id, pos(d, 0), d[3], (int) d[4], (int) d[5], life));
             case Vfx.VOID_IMPACT -> VfxManager.add(new VoidImpactVfx(id, pos(d, 0), d[3], life));
             default -> {
             }
