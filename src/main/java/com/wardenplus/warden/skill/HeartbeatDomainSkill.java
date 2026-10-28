@@ -74,7 +74,7 @@ public final class HeartbeatDomainSkill extends WardenSkill {
                 continue;
             }
             Vfx.send(w, Vfx.HEARD, 16, e.getId());
-            if (e.hurt(Combat.echo(w), damage)) {
+            e.hurt(Combat.echo(w), damage); if (true) {
                 e.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 80, 0), w);
             }
         }
@@ -85,3 +85,7 @@ public final class HeartbeatDomainSkill extends WardenSkill {
         return Combat.victims(w, box).stream().filter(e -> e.distanceToSqr(center) <= RADIUS * RADIUS).toList();
     }
 }
+
+
+
+

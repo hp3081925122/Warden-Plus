@@ -86,3 +86,7 @@ public final class ShockRingVfx extends VfxBase {
         Draw.wall(wall, c.x, c.y, c.z, r * 0.985F, 0.5F + 0.6F * power * fade, 80, 11, -t * 0.05F, pale[0], pale[1], pale[2], 0.6F * fade, 0.0F);
     }
 }
+
+
+
+

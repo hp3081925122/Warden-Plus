@@ -84,3 +84,7 @@ public final class SonicLockVfx extends VfxBase {
         Draw.billboard(glow, from.x, from.y, from.z, 2.8F * f, 0, VOID_PALE[0], VOID_PALE[1], VOID_PALE[2], f);
     }
 }
+
+
+
+

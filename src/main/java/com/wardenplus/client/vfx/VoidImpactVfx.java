@@ -4,6 +4,8 @@ import com.wardenplus.client.Draw;
 import com.wardenplus.client.ScreenFx;
 import com.wardenplus.client.WpRenderTypes;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
@@ -30,7 +32,7 @@ public final class VoidImpactVfx extends VfxBase {
                 debris(c.x, c.y, c.z, Math.cos(a) * s, 0.4 + RANDOM.nextDouble() * 0.6, Math.sin(a) * s);
             }
             for (int i = 0; i < 40; i++) {
-                particle(ParticleTypes.DRAGON_BREATH, c.x, c.y + 0.3, c.z, RANDOM.nextGaussian() * 0.35, RANDOM.nextDouble() * 0.3, RANDOM.nextGaussian() * 0.35);
+                particle(PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0F), c.x, c.y + 0.3, c.z, RANDOM.nextGaussian() * 0.35, RANDOM.nextDouble() * 0.3, RANDOM.nextGaussian() * 0.35);
                 particle(ParticleTypes.REVERSE_PORTAL, c.x, c.y + 0.5, c.z, RANDOM.nextGaussian() * 0.5, RANDOM.nextDouble() * 0.8, RANDOM.nextGaussian() * 0.5);
             }
             particle(ParticleTypes.EXPLOSION_EMITTER, c.x, c.y + 0.5, c.z, 0, 0, 0);
@@ -49,3 +51,9 @@ public final class VoidImpactVfx extends VfxBase {
         Draw.flat(Draw.add(WpRenderTypes.RUNE), c.x, c.y + 0.06, c.z, 4.5F * power, t * 0.04F, VOID[0], VOID[1], VOID[2], 0.8F * f);
     }
 }
+
+
+
+
+
+

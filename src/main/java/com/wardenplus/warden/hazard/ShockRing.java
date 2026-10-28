@@ -55,10 +55,14 @@ public final class ShockRing implements Hazard {
                 continue;
             }
             hit.add(e.getId());
-            if (e.hurt(Combat.physical(warden), damage)) {
+            e.hurt(Combat.physical(warden), damage); if (true) {
                 Combat.knock(e, center.x, center.z, push, up);
             }
         }
         return radius < maxRadius;
     }
 }
+
+
+
+

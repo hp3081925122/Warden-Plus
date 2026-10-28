@@ -96,3 +96,7 @@ public final class EnderTrailVfx extends VfxBase {
         }
     }
 }
+
+
+
+

@@ -114,3 +114,7 @@ public abstract class VfxBase {
         return new Vec3(d[i], d[i + 1], d[i + 2]);
     }
 }
+
+
+
+

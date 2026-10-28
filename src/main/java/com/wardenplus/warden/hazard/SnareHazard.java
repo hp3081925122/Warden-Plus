@@ -39,8 +39,8 @@ public final class SnareHazard implements Hazard {
             if (dx * dx + dz * dz > radius * radius) {
                 continue;
             }
-            if (e.hurt(Combat.physical(warden), damage)) {
-                e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50, 2), warden);
+            e.hurt(Combat.physical(warden), damage); if (true) {
+                e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 50, 2), warden);
                 Vec3 v = e.getDeltaMovement();
                 e.setDeltaMovement(v.x * 0.1, Math.min(v.y, -0.25), v.z * 0.1);
                 e.hurtMarked = true;
@@ -49,3 +49,7 @@ public final class SnareHazard implements Hazard {
         return false;
     }
 }
+
+
+
+

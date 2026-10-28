@@ -198,7 +198,7 @@ public final class RiftOctetSkill extends WardenSkill {
             if (e.distanceToSqr(center.x, e.getY(), center.z) > BLAST * BLAST || e.getY() > center.y + SKY || e.getY() < center.y - 2.0) {
                 continue;
             }
-            if (e.hurt(w.damageSources().sonicBoom(w), damage)) {
+            e.hurt(w.damageSources().sonicBoom(w), damage); if (true) {
                 Combat.knock(e, center.x, center.z, 0.6, 0.35);
             }
         }
@@ -240,3 +240,7 @@ public final class RiftOctetSkill extends WardenSkill {
         }
     }
 }
+
+
+
+

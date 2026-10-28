@@ -99,3 +99,7 @@ public final class CollapseVfx extends VfxBase {
         Draw.billboard(glow, core.x, core.y, core.z, rc * 1.9F, -t * 0.04F, CYAN[0], CYAN[1], CYAN[2], 0.45F + 0.4F * p);
     }
 }
+
+
+
+

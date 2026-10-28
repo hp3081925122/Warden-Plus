@@ -74,3 +74,7 @@ public final class SculkSnareSkill extends WardenSkill {
         sound(w, base, SoundEvents.SCULK_CATALYST_BLOOM, 3.0F, 0.6F);
     }
 }
+
+
+
+

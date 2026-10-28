@@ -41,7 +41,7 @@ final class EnderFx {
             if (e.distanceToSqr(center.x, e.getY(), center.z) > radius * radius || Math.abs(e.getY() - center.y) > 2.5) {
                 continue;
             }
-            if (e.hurt(Combat.physical(w), damage)) {
+            e.hurt(Combat.physical(w), damage); if (true) {
                 Combat.knock(e, center.x, center.z, 0.55, 0.45);
             }
         }
@@ -53,3 +53,7 @@ final class EnderFx {
         Vfx.send(w, Vfx.CRACK, 90, Vfx.pos(center, (float) radius + 1.5F, Vfx.PALETTE_ENDER));
     }
 }
+
+
+
+

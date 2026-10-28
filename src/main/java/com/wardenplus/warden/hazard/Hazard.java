@@ -5,3 +5,7 @@ import com.wardenplus.warden.WardenController;
 public interface Hazard {
     boolean tick(WardenController controller);
 }
+
+
+
+

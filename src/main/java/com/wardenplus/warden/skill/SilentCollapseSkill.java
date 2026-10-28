@@ -71,7 +71,7 @@ public final class SilentCollapseSkill extends WardenSkill {
                 scale *= 0.35F;
             }
             scale = Math.max(scale, 0.15F);
-            if (e.hurt(Combat.echo(w), damage * scale)) {
+            e.hurt(Combat.echo(w), damage * scale); if (true) {
                 Combat.knock(e, w.getX(), w.getZ(), 1.0 * scale + 0.3, 0.4);
                 e.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0), w);
             }
@@ -82,3 +82,7 @@ public final class SilentCollapseSkill extends WardenSkill {
         sound(w, SoundEvents.WARDEN_SONIC_BOOM, 2.0F, 0.5F);
     }
 }
+
+
+
+

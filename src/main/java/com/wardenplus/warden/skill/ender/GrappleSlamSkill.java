@@ -156,7 +156,7 @@ public final class GrappleSlamSkill extends WardenSkill {
             if (e == held || e.distanceToSqr(at) > 9.0) {
                 continue;
             }
-            if (e.hurt(Combat.physical(w), damage * 0.5F)) {
+            e.hurt(Combat.physical(w), damage * 0.5F); if (true) {
                 Combat.knock(e, at.x, at.z, 0.5, 0.35);
             }
         }
@@ -183,3 +183,7 @@ public final class GrappleSlamSkill extends WardenSkill {
         }
     }
 }
+
+
+
+

@@ -32,3 +32,7 @@ public final class CrackVfx extends VfxBase {
         Draw.flat(Draw.add(WpRenderTypes.GLOW), c.x, c.y + 0.03, c.z, radius * 1.25F * grow, 0, pal[2][0], pal[2][1], pal[2][2], 0.45F * a * (1 - Math.min(1, t / 20F) * 0.6F));
     }
 }
+
+
+
+

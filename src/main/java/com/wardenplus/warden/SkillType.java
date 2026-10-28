@@ -80,3 +80,7 @@ public enum SkillType {
         return check == null || check.test(c, target, dist);
     }
 }
+
+
+
+

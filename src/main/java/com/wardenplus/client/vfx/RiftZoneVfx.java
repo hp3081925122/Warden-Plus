@@ -82,3 +82,7 @@ public final class RiftZoneVfx extends VfxBase {
         Draw.flat(glow, c.x, y, c.z, radius * (1.0F + 0.4F * (1 - f)), 0, VOID_PALE[0], VOID_PALE[1], VOID_PALE[2], 0.9F * f);
     }
 }
+
+
+
+

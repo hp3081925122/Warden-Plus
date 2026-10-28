@@ -103,3 +103,7 @@ public final class SoulGatherVfx extends VfxBase {
         Draw.ring(band, sigil.add(fwd.scale(0.03)), fwd, size * 1.02F, size * 1.12F, 40, t * 0.04F, VOID[0], VOID[1], VOID[2], 0.9F * p * out, 0.9F * p * out);
     }
 }
+
+
+
+

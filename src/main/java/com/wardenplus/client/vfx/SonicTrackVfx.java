@@ -39,3 +39,7 @@ public final class SonicTrackVfx extends VfxBase {
         Draw.billboard(Draw.add(WpRenderTypes.GLOW), aim.x, aim.y, aim.z, 0.6F + 0.5F * p, t * 0.2F, VOID[0], VOID[1], VOID[2], 0.5F * flick);
     }
 }
+
+
+
+

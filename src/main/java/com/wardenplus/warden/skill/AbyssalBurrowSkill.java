@@ -114,7 +114,7 @@ public final class AbyssalBurrowSkill extends WardenSkill {
             if (e.distanceToSqr(eruptPos.x, e.getY(), eruptPos.z) > 3.5 * 3.5) {
                 continue;
             }
-            if (e.hurt(Combat.physical(w), damage)) {
+            e.hurt(Combat.physical(w), damage); if (true) {
                 Combat.knock(e, eruptPos.x, eruptPos.z, 0.6, 0.85);
             }
         }
@@ -148,3 +148,7 @@ public final class AbyssalBurrowSkill extends WardenSkill {
         }
     }
 }
+
+
+
+

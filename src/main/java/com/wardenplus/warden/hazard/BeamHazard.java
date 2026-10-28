@@ -37,10 +37,14 @@ public final class BeamHazard implements Hazard {
             if (Combat.segmentDistance(c, from, to) > 0.7 + e.getBbWidth() * 0.5) {
                 continue;
             }
-            if (e.hurt(Combat.echo(warden), damage)) {
+            e.hurt(Combat.echo(warden), damage); if (true) {
                 Combat.knock(e, e.getX() - dir.x, e.getZ() - dir.z, 0.35, 0.1);
             }
         }
         return false;
     }
 }
+
+
+
+

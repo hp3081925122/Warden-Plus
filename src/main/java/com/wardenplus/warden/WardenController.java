@@ -345,7 +345,7 @@ public final class WardenController {
             return;
         }
         if (bossBar == null) {
-            bossBar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.NOTCHED_10);
+            bossBar = new ServerBossEvent(warden.getUUID(), Component.empty(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.NOTCHED_10);
             bossBar.setDarkenScreen(true);
         }
         bossBar.setProgress(Mth.clamp(warden.getHealth() / warden.getMaxHealth(), 0.0F, 1.0F));
@@ -376,3 +376,7 @@ public final class WardenController {
         }
     }
 }
+
+
+
+

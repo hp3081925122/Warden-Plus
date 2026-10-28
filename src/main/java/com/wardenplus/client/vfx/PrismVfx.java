@@ -5,6 +5,8 @@ import com.wardenplus.client.Draw;
 import com.wardenplus.client.WpRenderTypes;
 import com.wardenplus.warden.skill.EchoPrismSkill;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
@@ -36,7 +38,7 @@ public final class PrismVfx extends VfxBase {
                 for (int k = 0; k < 18; k++) {
                     particle(ParticleTypes.END_ROD, p.x, p.y, p.z, RANDOM.nextGaussian() * 0.12, RANDOM.nextGaussian() * 0.12, RANDOM.nextGaussian() * 0.12);
                 }
-                particle(ParticleTypes.FLASH, p.x, p.y, p.z, 0, 0, 0);
+                particle(ColorParticleOption.create(ParticleTypes.FLASH, 0xFFFFFFFF), p.x, p.y, p.z, 0, 0, 0);
             } else if (age < fireTime(i) && age > i * 2 && RANDOM.nextInt(3) == 0) {
                 particle(ParticleTypes.SCULK_CHARGE_POP, p.x + RANDOM.nextGaussian() * 0.3, p.y + RANDOM.nextGaussian() * 0.3, p.z + RANDOM.nextGaussian() * 0.3, 0, -0.02, 0);
             }
@@ -74,3 +76,9 @@ public final class PrismVfx extends VfxBase {
         }
     }
 }
+
+
+
+
+
+

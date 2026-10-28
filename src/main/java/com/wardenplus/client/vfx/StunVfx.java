@@ -53,3 +53,7 @@ public final class StunVfx extends VfxBase {
         Draw.flat(Draw.add(WpRenderTypes.RUNE), h.x, h.y - 0.1, h.z, 1.3F, -t * 0.08F, VOID[0], VOID[1], VOID[2], 0.55F * env);
     }
 }
+
+
+
+

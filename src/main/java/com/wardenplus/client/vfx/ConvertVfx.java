@@ -4,6 +4,8 @@ import com.wardenplus.client.Draw;
 import com.wardenplus.client.ScreenFx;
 import com.wardenplus.client.WpRenderTypes;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
@@ -46,7 +48,7 @@ public final class ConvertVfx extends VfxBase {
             }
             for (int i = 0; i < 50; i++) {
                 Vec3 d = new Vec3(RANDOM.nextGaussian(), Math.abs(RANDOM.nextGaussian()), RANDOM.nextGaussian()).normalize().scale(0.6);
-                particle(ender ? ParticleTypes.DRAGON_BREATH : ParticleTypes.END_ROD, base.x, base.y + 1.8, base.z, d.x, d.y * 0.6, d.z);
+                particle(ender ? PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0F) : ParticleTypes.END_ROD, base.x, base.y + 1.8, base.z, d.x, d.y * 0.6, d.z);
             }
         }
     }
@@ -74,3 +76,9 @@ public final class ConvertVfx extends VfxBase {
         Draw.billboard(Draw.add(WpRenderTypes.GLOW), base.x, base.y + 1.8, base.z, (1.2F + 3.5F * pop) * heart * env + 0.2F, 0, pal[0][0], pal[0][1], pal[0][2], env);
     }
 }
+
+
+
+
+
+

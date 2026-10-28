@@ -76,3 +76,7 @@ public final class EruptVfx extends VfxBase {
         Draw.flat(glow, c.x, c.y + 0.05, c.z, radius * 1.8F, 0, TEAL[0], TEAL[1], TEAL[2], 0.6F * f);
     }
 }
+
+
+
+

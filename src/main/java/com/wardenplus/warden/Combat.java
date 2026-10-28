@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class Combat {
-    public static final ResourceKey<DamageType> ECHO = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "echo"));
+    public static final ResourceKey<DamageType> ECHO = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WardenPlus.MOD_ID, "echo"));
 
     private Combat() {
     }
@@ -34,7 +34,7 @@ public final class Combat {
     }
 
     public static DamageSource echo(Warden warden) {
-        return new DamageSource(warden.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ECHO), warden);
+        return new DamageSource(warden.level().registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(ECHO), warden);
     }
 
     public static DamageSource physical(Warden warden) {
@@ -129,3 +129,8 @@ public final class Combat {
         return p.distanceTo(a.add(ab.scale(t)));
     }
 }
+
+
+
+
+

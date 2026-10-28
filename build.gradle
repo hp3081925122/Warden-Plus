@@ -1,54 +1,61 @@
-// 当前文件只保留最小的 NeoForge 开发、构建和运行配置。
+// 当前文件使用 Minecraft 26.1.2 NeoForge 的开发、构建和运行配置。
 plugins {
     id 'java-library'
-    id 'eclipse'
-    id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.1.37'
+    id 'net.neoforged.moddev' version '2.0.140'
+}
+
+repositories {
+    maven {
+        url = 'https://www.cursemaven.com'
+        content { includeGroup 'curse.maven' }
+    }
 }
 
 version = project.mod_version
 group = project.mod_group_id
 
-repositories {
-    mavenLocal()
-    maven { url = 'https://maven.neoforged.net/releases' }
-    maven {
-        url = 'https://www.cursemaven.com'
-        content {
-            includeGroup 'curse.maven'
-        }
-    }
-}
-
 base {
     archivesName = "${project.mod_id}-${project.minecraft_version}-neoforge"
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
-        modSource project.sourceSets.main
+neoForge {
+    version = project.neo_version
+
+    runs {
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
     }
 
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    mods {
+        "${project.mod_id}" {
+            sourceSet(sourceSets.main)
+        }
     }
 }
 
@@ -56,12 +63,10 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     implementation "net.neoforged:neoforge:${project.neo_version}"
-    implementation "curse.maven:jei-238222:8792638"
-    implementation "curse.maven:just-enough-characters-250702:8117474"
-    implementation "curse.maven:jade-324717:8591319"
+    implementation "curse.maven:just-enough-characters-250702:8413185"
+    implementation "curse.maven:jade-324717:8651070"
     // 开发环境加入 Advanced Loot Info，查看战利品表和村民交易信息。
-    implementation "curse.maven:advanced-core-info-1661923:9002615"
-    implementation "curse.maven:advanced-loot-info-1205426:9002619"
+    implementation "curse.maven:advanced-loot-info-1205426:8169069"
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -99,5 +104,6 @@ publishing {
 }
 
 tasks.withType(JavaCompile).configureEach {
+    options.release = 25
     options.encoding = 'UTF-8'
 }

@@ -80,3 +80,7 @@ public final class DomainVfx extends VfxBase {
         Draw.billboard(Draw.add(WpRenderTypes.GLOW), c.x, c.y + 1.9, c.z, 1.2F + 2.4F * beat, 0, CYAN[0], CYAN[1], CYAN[2], (0.4F + 0.6F * beat) * f * (0.85F + 0.15F * Mth.sin(t)));
     }
 }
+
+
+
+

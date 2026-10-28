@@ -15,3 +15,7 @@ public final class WardenPlus {
         modContainer.registerConfig(ModConfig.Type.COMMON, WpConfig.SPEC);
     }
 }
+
+
+
+

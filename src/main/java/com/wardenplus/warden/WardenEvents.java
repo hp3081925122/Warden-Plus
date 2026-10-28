@@ -8,7 +8,7 @@ import com.wardenplus.network.VfxPayload;
 import com.wardenplus.warden.skill.ConvertSkill;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Unit;
@@ -37,8 +37,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 @EventBusSubscriber(modid = WardenPlus.MOD_ID)
 public final class WardenEvents {
-    private static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "health_bonus");
-    private static final ResourceLocation ATTACK_ID = ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "attack_bonus");
+    private static final Identifier HEALTH_ID = Identifier.fromNamespaceAndPath(WardenPlus.MOD_ID, "health_bonus");
+    private static final Identifier ATTACK_ID = Identifier.fromNamespaceAndPath(WardenPlus.MOD_ID, "attack_bonus");
 
     private WardenEvents() {
     }
@@ -133,7 +133,7 @@ public final class WardenEvents {
 
     private static void applyAttributes(Warden warden, WardenVariant variant) {
         CompoundTag tag = warden.getPersistentData();
-        if (tag.getBoolean(WardenVariant.ATTR_KEY)) {
+        if (tag.getBoolean(WardenVariant.ATTR_KEY).orElse(false)) {
             return;
         }
         tag.putBoolean(WardenVariant.ATTR_KEY, true);
@@ -206,7 +206,7 @@ public final class WardenEvents {
         if (!(source.getEntity() instanceof Warden warden) || source.getDirectEntity() != warden || warden.level().isClientSide()) {
             return;
         }
-        if (!source.is(DamageTypes.MOB_ATTACK) || event.getNewDamage() <= 0) {
+        if (!source.is(DamageTypes.MOB_ATTACK) || event.getInflictedDamage() <= 0) {
             return;
         }
         WardenController c = WardenControllers.peek(warden);
@@ -240,3 +240,8 @@ public final class WardenEvents {
         }
     }
 }
+
+
+
+
+

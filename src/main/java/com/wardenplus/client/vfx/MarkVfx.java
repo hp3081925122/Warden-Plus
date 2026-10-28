@@ -44,3 +44,7 @@ public final class MarkVfx extends VfxBase {
         Draw.wall(Draw.add(WpRenderTypes.FADE), c.x, c.y, c.z, r * 0.8F, (float) (e.getBbHeight() + 0.5) * p, 24, 2, t * 0.06F, VOID[0], VOID[1], VOID[2], 0.6F * in, 0);
     }
 }
+
+
+
+

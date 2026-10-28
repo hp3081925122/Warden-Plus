@@ -59,3 +59,7 @@ public final class RiftHuntSkill extends WardenSkill {
         }
     }
 }
+
+
+
+

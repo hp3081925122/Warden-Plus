@@ -213,7 +213,7 @@ public final class VoidLoopSkill extends WardenSkill {
         float base = Combat.damage(w, SkillType.VOID_LOOP);
         float damage = base * (1.0F + 0.25F * loops);
         held.resetFallDistance();
-        if (held.hurt(Combat.physical(w), damage)) {
+        held.hurt(Combat.physical(w), damage); if (true) {
             double resist = Mth.clamp(1.0 - held.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE), 0.0, 1.0);
             held.setDeltaMovement(0, 0.35 * resist, 0);
             held.hurtMarked = true;
@@ -222,7 +222,7 @@ public final class VoidLoopSkill extends WardenSkill {
             if (e == held || e.distanceToSqr(at) > 16.0) {
                 continue;
             }
-            if (e.hurt(Combat.physical(w), base * 0.5F)) {
+            e.hurt(Combat.physical(w), base * 0.5F); if (true) {
                 Combat.knock(e, at.x, at.z, 0.6, 0.4);
             }
         }
@@ -279,3 +279,7 @@ public final class VoidLoopSkill extends WardenSkill {
         c.invulnerable = false;
     }
 }
+
+
+
+

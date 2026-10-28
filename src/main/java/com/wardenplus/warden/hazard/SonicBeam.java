@@ -37,10 +37,14 @@ public final class SonicBeam implements Hazard {
             if (Combat.segmentDistance(c, from, to) > width + e.getBbWidth() * 0.5) {
                 continue;
             }
-            if (e.hurt(warden.damageSources().sonicBoom(warden), damage)) {
+            e.hurt(warden.damageSources().sonicBoom(warden), damage); if (true) {
                 Combat.knock(e, e.getX() - dir.x, e.getZ() - dir.z, 0.8, 0.25);
             }
         }
         return false;
     }
 }
+
+
+
+

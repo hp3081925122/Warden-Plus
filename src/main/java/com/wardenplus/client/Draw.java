@@ -6,14 +6,16 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.LinkedHashMap;
 import java.util.SequencedMap;
 import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.LightTexture;
+
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 public final class Draw {
     private static final SequencedMap<RenderType, ByteBufferBuilder> FIXED = new LinkedHashMap<>();
@@ -22,8 +24,8 @@ public final class Draw {
     private static double cx;
     private static double cy;
     private static double cz;
-    private static Vector3f left;
-    private static Vector3f up;
+    private static Vector3fc left;
+    private static Vector3fc up;
     public static float partial;
 
     private Draw() {
@@ -31,12 +33,12 @@ public final class Draw {
 
     public static void begin(PoseStack.Pose p, Camera camera, float pt) {
         matrix = p.pose();
-        Vec3 c = camera.getPosition();
+        Vec3 c = camera.position();
         cx = c.x;
         cy = c.y;
         cz = c.z;
-        left = camera.getLeftVector();
-        up = camera.getUpVector();
+        left = camera.leftVector();
+        up = camera.upVector();
         partial = pt;
     }
 
@@ -48,11 +50,11 @@ public final class Draw {
         return new Vec3(cx, cy, cz);
     }
 
-    public static VertexConsumer add(ResourceLocation tex) {
+    public static VertexConsumer add(Identifier tex) {
         return buffer(WpRenderTypes.additive(tex));
     }
 
-    public static VertexConsumer shade(ResourceLocation tex) {
+    public static VertexConsumer shade(Identifier tex) {
         return buffer(WpRenderTypes.translucent(tex));
     }
 
@@ -69,7 +71,7 @@ public final class Draw {
     }
 
     public static void v(VertexConsumer vc, double x, double y, double z, float u, float v, float r, float g, float b, float a) {
-        vc.addVertex(matrix, (float) (x - cx), (float) (y - cy), (float) (z - cz)).setColor(r, g, b, Mth.clamp(a, 0.0F, 1.0F)).setUv(u, v).setLight(LightTexture.FULL_BRIGHT);
+        vc.addVertex(matrix, (float) (x - cx), (float) (y - cy), (float) (z - cz)).setColor(r, g, b, Mth.clamp(a, 0.0F, 1.0F)).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(0.0F, 1.0F, 0.0F);
     }
 
     public static void billboard(VertexConsumer vc, double x, double y, double z, float size, float rot, float r, float g, float b, float a) {
@@ -277,3 +279,8 @@ public final class Draw {
         }
     }
 }
+
+
+
+
+

@@ -12,3 +12,7 @@ public final class WpNetwork {
         registrar.playToClient(VfxPayload.TYPE, VfxPayload.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> com.wardenplus.client.ClientPayloads.handle(payload)));
     }
 }
+
+
+
+

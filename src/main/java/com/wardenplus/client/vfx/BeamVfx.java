@@ -62,3 +62,7 @@ public final class BeamVfx extends VfxBase {
         Draw.billboard(glow, from.x, from.y, from.z, 1.6F * f, 0, PALE[0], PALE[1], PALE[2], 0.9F * f);
     }
 }
+
+
+
+

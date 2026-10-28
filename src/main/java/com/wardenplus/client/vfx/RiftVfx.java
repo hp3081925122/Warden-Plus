@@ -96,3 +96,7 @@ public final class RiftVfx extends VfxBase {
         Draw.disc(Draw.add(WpRenderTypes.GLOW), c.add(normal.scale(0.04)), normal, r * 1.8F, 0, VOID[0], VOID[1], VOID[2], 0.35F * pulse);
     }
 }
+
+
+
+

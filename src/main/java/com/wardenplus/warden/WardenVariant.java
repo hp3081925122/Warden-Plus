@@ -33,7 +33,7 @@ public enum WardenVariant {
     }
 
     public static WardenVariant of(Warden warden) {
-        return byKey(warden.getPersistentData().getString(KEY));
+        return byKey(warden.getPersistentData().getString(KEY).orElse(""));
     }
 
     public static void set(Warden warden, WardenVariant variant) {
@@ -42,3 +42,7 @@ public enum WardenVariant {
         tag.putBoolean(ENHANCED_KEY, variant != NONE);
     }
 }
+
+
+
+

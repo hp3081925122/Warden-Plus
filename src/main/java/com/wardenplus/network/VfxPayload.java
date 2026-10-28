@@ -4,10 +4,10 @@ import com.wardenplus.WardenPlus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public record VfxPayload(int kind, int entityId, int duration, float[] data) implements CustomPacketPayload {
-    public static final Type<VfxPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(WardenPlus.MOD_ID, "vfx"));
+    public static final Type<VfxPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(WardenPlus.MOD_ID, "vfx"));
     public static final StreamCodec<FriendlyByteBuf, VfxPayload> STREAM_CODEC = StreamCodec.of(VfxPayload::write, VfxPayload::read);
 
     private static void write(FriendlyByteBuf buf, VfxPayload p) {
@@ -37,3 +37,7 @@ public record VfxPayload(int kind, int entityId, int duration, float[] data) imp
         return TYPE;
     }
 }
+
+
+
+

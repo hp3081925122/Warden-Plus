@@ -84,3 +84,7 @@ public final class SnareVfx extends VfxBase {
         Draw.flat(Draw.shade(WpRenderTypes.CRACK), c.x, c.y + 0.03, c.z, 1.8F, seed, DEEP[0], DEEP[1], DEEP[2], 0.8F * retract);
     }
 }
+
+
+
+

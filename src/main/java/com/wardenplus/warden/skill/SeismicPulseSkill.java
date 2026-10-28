@@ -54,3 +54,7 @@ public final class SeismicPulseSkill extends WardenSkill {
         sound(w, center, SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.6F);
     }
 }
+
+
+
+
