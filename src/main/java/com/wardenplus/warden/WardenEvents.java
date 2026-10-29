@@ -22,14 +22,18 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -222,6 +226,22 @@ public final class WardenEvents {
         if (EnderOps.randomTeleport(warden, victim, min, max)) {
             c.touchCooldown = WpConfig.TOUCH_COOLDOWN.get();
         }
+    }
+
+    @SubscribeEvent
+    public static void onDrops(LivingDropsEvent event) {
+        if (!(event.getEntity() instanceof Warden warden) || warden.level().isClientSide() || WardenVariant.of(warden) != WardenVariant.ENDER) {
+            return;
+        }
+        if (!warden.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+            return;
+        }
+        if (!"minecraft:entities/warden".equals(WpConfig.ENDER_LOOT_TABLE.get())) {
+            return;
+        }
+        ItemEntity drop = new ItemEntity(warden.level(), warden.getX(), warden.getY(), warden.getZ(), new ItemStack(Items.ENDER_PEARL));
+        drop.setDefaultPickUpDelay();
+        event.getDrops().add(drop);
     }
 
     @SubscribeEvent
