@@ -24,6 +24,7 @@ public final class WpConfig {
     public static final ForgeConfigSpec.ConfigValue<String> ECHO_ITEM;
     public static final ForgeConfigSpec.BooleanValue ECHO_ENABLED;
     public static final ForgeConfigSpec.ConfigValue<String> ENDER_ITEM;
+    public static final ForgeConfigSpec.ConfigValue<String> ENDER_LOOT_TABLE;
     public static final ForgeConfigSpec.BooleanValue CONSUME_ITEM;
     public static final ForgeConfigSpec.DoubleValue ENDER_HEALTH_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue ENDER_ATTACK_MULTIPLIER;
@@ -68,6 +69,7 @@ public final class WpConfig {
         CONSUME_ITEM = b.comment("生存模式下是否消耗物品 / Consume the item in survival").define("consumeItem", true);
         b.pop();
         b.comment("末影监守者设置 / Ender Warden settings").push("ender");
+        ENDER_LOOT_TABLE = b.comment("末影监守者使用的战利品表 ID / Loot table ID used by the Ender Warden").define("lootTable", "minecraft:entities/warden");
         ENDER_HEALTH_MULTIPLIER = b.comment("最大生命倍率，只在转化时应用一次 / Max health multiplier, applied once on conversion").defineInRange("healthMultiplier", 1.0, 0.1, 100.0);
         ENDER_ATTACK_MULTIPLIER = b.comment("攻击力倍率，只在转化时应用一次 / Attack damage multiplier, applied once on conversion").defineInRange("attackMultiplier", 1.0, 0.1, 100.0);
         TOUCH_CHANCE = b.comment("普攻命中后把目标随机传送走的概率 / Chance that a melee hit teleports the target").defineInRange("touchChance", 0.35, 0.0, 1.0);
