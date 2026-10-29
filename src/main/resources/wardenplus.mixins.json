@@ -4,7 +4,8 @@
   "package": "com.wardenplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "WardenMixin"
+    "WardenMixin",
+    "MobLootMixin"
   ],
   "client": [
     "client.WardenModelMixin",
